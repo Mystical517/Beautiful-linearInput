@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <div>
+        <iframe id="show" src="transform" frameborder="0" width="100%" height="300px"></iframe>
+    </div>
+    <div>
+        <textarea id="linearInput" style="width: 100%;height:100px;"></textarea>
+        <button onclick="transform()">transform</button>
+    </div>
+</body>
+
+</html>
+
+<script>
+    function transform() {
+
+        var linearInput = String(document.getElementById("linearInput").value)
+
+        // @a/b@ 自动替换成\frac{a}{b}
+        console.log(linearInput)
+
+        linearInput = linearInput.replace(/([\^\{\}\\\w]+)\/([\^\{\}\\\w]+)/g, "\\frac{$1}{$2}")
+
+        linearInput = linearInput.replace(/[\r\n]/g, "<br />")
+        linearInput = linearInput.replace(/\+/g, "%2B")
+
+        frameHeight = linearInput.split("<br />").length
+
+        document.getElementById("show").height = String(300 + 25 * Math.abs(frameHeight - 4))
+        document.getElementById("show").src = "transform?input=" + linearInput
+    }
+</script>
